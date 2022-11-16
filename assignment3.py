@@ -15,6 +15,7 @@ from nltk.corpus import stopwords
 import numpy as np
 import pandas as pd
 import string
+import scipy.stats
 
 nltk.download('stopwords')
 
@@ -48,20 +49,30 @@ def analyze_classifier(model_name, x_predicted, y_test):
     print("Classification Report",classification_report(y_test, x_predicted))
     print("\n Confusion Matrix: \n",confusion_matrix(y_test, x_predicted))
 
+def find_95_confidence_interval(acc_test, y_test):
+    z_value = scipy.stats.norm.ppf((1 + 0.95) / 2.0)
+    ci_length = z_value * np.sqrt((acc_test * (1 - acc_test)) / y_test.shape[0])
+    ci_lower = acc_test - ci_length
+    ci_upper = acc_test + ci_length
+    print(ci_lower, ci_upper)
+
 def naive_bayes(x_train, x_test, y_train, y_test):
     NB_classifier = MultinomialNB().fit(x_train, y_train)
     pred = NB_classifier.predict(x_test)
     analyze_classifier("Naive Bayes", pred, y_test)
+    find_95_confidence_interval(NB_classifier.score(x_test, y_test), y_test)
 
 def knn_classifier(x_train, x_test, y_train, y_test):
     neigh_classifier = KNeighborsClassifier().fit(x_train, y_train)
     pred = neigh_classifier.predict(x_test)
     analyze_classifier("KNN", pred, y_test)
+    find_95_confidence_interval(neigh_classifier.score(x_test, y_test), y_test)
 
 def sv_classifier(x_train, x_test, y_train, y_test):
     svclassifier = SVC(kernel='linear').fit(x_train, y_train)
     pred = svclassifier.predict(x_test)
     analyze_classifier("SVM", pred, y_test)
+    find_95_confidence_interval(svclassifier.score(x_test, y_test), y_test)
 
 
 if __name__ == '__main__':
