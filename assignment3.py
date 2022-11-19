@@ -18,8 +18,11 @@ from nltk.corpus import stopwords
 
 nltk.download('stopwords')
 
-__author__ = 'Jacob Hajjar, Michael-Ken Okolo'
-__email__ = 'hajjarj@csu.fullerton.edu, michaelken.okolo1@csu.fullerton.edu'
+''' Develop machine learning models that can classify Spam emails'''
+
+__author__ = 'Jacob Hajjar, Michael-Ken Okolo, Vatsal Patel, Ayush Bhatnagar, Onkar Muttemwar'
+__email__ = 'hajjarj@csu.fullerton.edu, michaelken.okolo1@csu.fullerton.edu, vatsal1224@csu.fullerton.edu, ' \
+            'ayush.bhatnagar@csu.fullerton.edu, onkar.muttemwar@csu.fullerton.edu'
 __maintainer__ = 'jacobhajjar, michaelkenokolo'
 
 
